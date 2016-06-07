@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>happyDemon/ParsleyJS-LaraExtras</title>
+    <!-- Bootstrap theme -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/yeti/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-yxFy3Tt84CcGRj9UI7RA25hoUMpUPoFzcdPtK3hBdNgEGnh9FdKgMVM+lbAZTKN2" crossorigin="anonymous">
+    <!-- Font awesome, just in case -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <!-- Default parsley styling-->
+    <link rel="stylesheet" href="examples/style.css">
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">ParsleyJS-LaraExtras</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Rules <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#rules_in">In</a></li>
+                        <li><a href="#rules_different">Different</a></li>
+                        <li><a href="#rules_size">Size</a></li>
+                        <li><a href="#rules_dates">Dates</a></li>
+                        <li><a href="#rules_misc">Miscellaneous</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://github.com/happyDemon/ParsleyJS-LaraExtras">Repo</a></li>
+                <li><a href="https://github.com/happyDemon">Author</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="jumbotron">
+    <div class="container">
+        <h1>ParsleyJS-LaraExtras</h1>
+        <p>
+            These are some extra rules for parsley.js that are actually translated from <br/>
+            Laravel's server-side validation rules.
+        </p>
+        <p><a href="https://github.com/happyDemon/ParsleyJS-LaraExtras" class="btn pull-right">Learn more <i
+                class="fa fa-github fa-2x"></i></a></p>
+    </div>
+</div>
+<div class="container" style="padding-bottom: 200px;">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="rules_in">In rules</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputInValue" class="control-label">data-parsley-in</label>
+                                <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-in">in</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-in="cheese,apple,cake,fries" type="text"
+                                       class="form-control input-sm" id="inputInValue" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be one of the following: <span class="text-primary">cheese,apple,cake,fries</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputNotInValue" class="control-label">data-parsley-not-in</label>
+                                <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-not-in">not_in</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-not-in="cheese,apple,cake,fries"
+                                       type="text" class="form-control input-sm" id="inputNotInValue"
+                                       placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should not be one of the following: <span class="text-primary">cheese,apple,cake,fries</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="rules_different">Different</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputDifferent" class="control-label">data-parsley-different</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-different">different</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-different="#inputDifferentOther"
+                                       type="text" class="form-control input-sm" id="inputDifferent"
+                                       placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be different from the right one</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-9 col-md-offset-3">
+                                <input type="text" class="form-control input-sm" id="inputDifferentOther"
+                                       placeholder="Value">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="rules_size">Size rules</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputBetween" class="control-label">data-parsley-between</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-between">between</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-between="[2,6]" type="text"
+                                       class="form-control input-sm" id="inputBetween" placeholder="Number">
+                                <div class="help-block text-info">
+                                    <small>Value should be between <span class="text-primary">2</span> and <span
+                                            class="text-primary">6</span></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputSizeNumber" class="control-label">data-parsley-size-number</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-size">size</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-size-number="6" type="text"
+                                       class="form-control input-sm" id="inputSizeNumber" placeholder="Number">
+                                <div class="help-block text-info">
+                                    <small>Value should be <span class="text-primary">6</span></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputSizeString" class="control-label">data-parsley-size-string</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-size">size</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-size-string="6" type="text"
+                                       class="form-control input-sm" id="inputSizeString" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be <span class="text-primary">6 characters</span> long</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="rules_date">Date rules <span class="badge badge-primary">moment.js</span></h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputDate" class="control-label">data-parsley-date</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-date">date</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-date type="text"
+                                       class="form-control input-sm" id="inputDate" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be a valid date</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputDateFormat" class="control-label">data-parsley-date-format</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-date-format">date_format</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-date-format="d-m-Y" type="text"
+                                       class="form-control input-sm" id="inputDateFormat" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be a date according to this format: <span class="text-primary">d-m-Y</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputDateBefore" class="control-label">data-parsley-before</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-before">before</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-before="12/02/2015" type="text"
+                                       class="form-control input-sm" id="inputDateBefore" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be a date before: <span class="text-primary">12/02/2015</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputDateBeforeInput"
+                                   class="control-label">data-parsley-before-input</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-before">before</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-before-input="#inputDateBefore"
+                                       type="text" class="form-control input-sm" id="inputDateBeforeInput"
+                                       placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be a date that happens before the left input</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputDateAfter" class="control-label">data-parsley-after</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-after">after</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-after="12/02/2015" type="text"
+                                       class="form-control input-sm" id="inputDateAfter" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be a date after: <span class="text-primary">12/02/2015</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputDateAfterInput"
+                                   class="control-label">data-parsley-after-input</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-after">after</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-after-input="#inputDateAfter"
+                                       type="text" class="form-control input-sm" id="inputDateAfterInput"
+                                       placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>Value should be a date that happens after the left input</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="rules_misc">Miscellaneous</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label class="control-label">data-parsley-distinct</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-distinct">distinct</a>
+                        </div>
+                            <div class="col-md-9">
+                                <ul class="list-inline">
+                                    <li>
+                                        <input data-parsley-trigger="change" name="disctinct" data-parsley-distinct
+                                               type="checkbox" class="input-sm form-control" value="blue"> Blue
+                                    </li>
+                                    <li>
+                                        <input data-parsley-trigger="change" name="disctinct" data-parsley-distinct
+                                               type="checkbox" class="input-sm form-control" value="green"> Green
+                                    </li>
+                                    <li>
+                                        <input data-parsley-trigger="change" name="disctinct" data-parsley-distinct
+                                               type="checkbox" class="input-sm form-control" value="blue"> Blue
+                                    </li>
+                                    <li>
+                                        <input data-parsley-trigger="change" name="disctinct" data-parsley-distinct
+                                               type="checkbox" class="input-sm form-control" value="green"> Green
+                                    </li>
+                                </ul>
+                                <div class="help-block text-info">
+                                    <small>All selected checkboxes should have a unique value</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputInArray" class="control-label">data-parsley-in-array</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-in-array">in_array</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-in-array="#distinctInput" type="text"
+                                       class="form-control input-sm" id="inputInArray" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>Value should be one of the values in the input on your right</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <input type="text" class="form-control input-sm" id="distinctInput"
+                                       value="cheese,apple,cake,fries">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            <label for="inputInArrayCheckbox"
+                                   class="control-label">data-parsley-in-array</label>
+                            <a class="text-warning clearfix" href="https://laravel.com/docs/5.2/validation#rule-in-array">in_array</a>
+                        </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-in-array="colors" type="text"
+                                       class="form-control input-sm" id="inputInArrayCheckbox" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>Value should be one of the values of the selected checkboxes to your right
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <ul class="list-inline">
+                                    <li>
+                                        <input name="colors" type="checkbox" class="input-sm form-control" value="blue"> Blue
+                                    </li>
+                                    <li>
+                                        <input name="colors" type="checkbox" class="input-sm form-control" value="green"> Green
+                                    </li>
+                                    <li>
+                                        <input name="colors" type="checkbox" class="input-sm form-control" value="red"> Red
+                                    </li>
+                                    <li>
+                                        <input name="colors" type="checkbox" class="input-sm form-control" value="yellow"> Yellow
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+<!-- ParsleyJS -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.3.13/parsley.min.js"></script>
+<!-- MomentJS for handling date validation -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
+<!-- New validation rules -->
+<script type="text/javascript" src="laravel-parsley.js"></script>
+
+<script>
+    $(function () {
+        // Tweak parsley to take bootstrap into account
+        $('form').parsley({
+            errorClass: 'has-error',
+            successClass: 'has-success',
+            classHandler: function (ParsleyField) {
+                return ParsleyField.$element.parents('.form-group');
+            },
+            errorsContainer: function (fieldEl) {
+                var $err = fieldEl.$element.parents('.form-group').find('.help-block');
+
+                $err.append('<br />')
+
+                return $err;
+            }
+        });
+    });
+</script>
+</body>
+</html>

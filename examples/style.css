@@ -1,0 +1,47 @@
+.parsley-errors-list {
+    margin: 2px 0 3px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    opacity: 0;
+
+    transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -webkit-transition: all .3s ease-in;
+}
+
+.parsley-errors-list.filled {
+    opacity: 1;
+}
+
+.badge {
+    vertical-align: top;
+    position: relative;
+    left: -10px;
+}
+.col-md-3 .text-warning {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+input[type="checkbox"].form-control {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+body{
+    padding-top: 45px;
+}
+.navbar {
+    margin-bottom: 0;
+    top: 0;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030
+}
