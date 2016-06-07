@@ -111,7 +111,9 @@ The input's value should be a date after the date from the `#other-input`'s valu
 
 #### data-parsley-disctinct
 
-The input's values should be unique (checkboxes, multiselects).
+The input's values should be unique (checkboxes, radios, select multiple).
+
+You can add the `data-parsley-multiple="mymultiplelink"` to the tags you want to include in the validation.
 
 *Laravel rule: [distinct](https://laravel.com/docs/5.2/validation#rule-distinct)*
 
