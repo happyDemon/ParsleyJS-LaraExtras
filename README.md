@@ -9,6 +9,17 @@ Don't forget to include moment.js if you're using date validation.
 
 If you'd like support for < IE9, include polyfill.js.
 
+### Dates
+
+The data-parsley-date validation rule takes a config option. 
+This option let's you decide what formats are valid.
+
+By default it looks for the following formats (in order);
+
+```
+window.Parsley.options.dateFormats = ['DD-MM-YY', 'DD-MM-YYYY', 'MM-DD-YY', 'MM-DD-YYYY', 'YY-MM-DD', 'YYYY-MM-DD'];
+```
+
 ## laravel-parsley.js
 
 Here are all the included rules, written down as you'd assign them as data attributes to the input that would require them.
