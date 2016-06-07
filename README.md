@@ -1,6 +1,10 @@
 # ParsleyJS-LaraExtras
 These are extra parsley validation rules that translate well to laravel's own validation rules.
 
+Be sure to take a look at the examples included in the repo.
+
+**Note: At the moment the required rules are untested and without examples, they'll follow shortly.**
+
 ## Install
 
 Just include laravel-parsley.js right after where you've included parsley.js.
@@ -143,25 +147,25 @@ The value is required unless another input's value matched one of its defined va
 
 *Laravel rule: [required_unless](https://laravel.com/docs/5.2/validation#rule-required-unless)*
 
-#### data-parsley-required-with="#elementValueToCheck,#elementValueToCheck,..."
+#### data-parsley-required-with="#elementToCheck,#elementToCheck,..."
 
 The value is required if any of the inputs are present in the dom
 
 *Laravel rule: [required_with](https://laravel.com/docs/5.2/validation#rule-required-with)*
 
-#### data-parsley-required-with-all="#elementValueToCheck,#elementValueToCheck,..."
+#### data-parsley-required-with-all="#elementToCheck,#elementToCheck,..."
 
 The value is required if all of the specified inputs are present in the dom
 
 *Laravel rule: [required_with_all](https://laravel.com/docs/5.2/validation#rule-required-with-all)*
 
-#### data-parsley-required-without="#elementValueToCheck,#elementValueToCheck,..."
+#### data-parsley-required-without="#elementToCheck,#elementCheck,..."
 
 The value is required if any of the inputs are not present in the dom
 
 *Laravel rule: [required_without](https://laravel.com/docs/5.2/validation#rule-required-without)*
 
-#### data-parsley-required-without-all="#elementValueToCheck,#elementValueToCheck,..."
+#### data-parsley-required-without-all="#elementToCheck,#elementToCheck,..."
 
 The value is required if all of the specified inputs are not present in the dom
 
