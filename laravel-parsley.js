@@ -7,11 +7,6 @@ window.Parsley
 
             return possibles.indexOf(value) > -1;
         },
-        validateNumber: function (value, parameter) {
-            var possibles = parameter.split(',');
-
-            return possibles.indexOf(value.toString()) > -1;
-        },
         messages: {
             en: 'The value should be one of the following: "%s".'
         }
@@ -40,10 +35,17 @@ window.Parsley
 window.Parsley
     .addValidator('different', {
         requirementType: 'string',
-        validateString: function (value, parameter) {
-            return jQuery(parameter).val() != value;
-        },
-        validateNumber: function (value, parameter) {
+        validateString: function (value, parameter, fieldInstance) {
+            if (jQuery(parameter).length == 0)
+                return true;
+
+            jQuery(parameter).on('change', function(){
+                if(jQuery(fieldInstance.$element.get(0)).val() != '')
+                {
+                    fieldInstance.validate();
+                }
+            });
+
             return jQuery(parameter).val() != value;
         },
         messages: {
@@ -87,13 +89,15 @@ window.Parsley
         }
     });
 
+// Valid date formats
+window.Parsley.options.dateFormats = ['DD/MM/YY', 'DD/MM/YYYY', 'MM/DD/YY', 'MM/DD/YYYY', 'YY/MM/DD', 'YYYY/MM/DD'];
 
 // Check if the value is a date
 window.Parsley
     .addValidator('date', {
         requirementType: 'boolean',
-        validateString: function (value) {
-            return moment(value, ['DD-MM-YY', 'DD-MM-YYYY', 'MM-DD-YY', 'MM-DD-YYYY', 'YY-MM-DD', 'YYYY-MM-DD']).isValid();
+        validateString: function (value, state, parsleyInstance) {
+            return moment(value, getDateFormatsOption(parsleyInstance), true).isValid();
         },
         messages: {
             en: 'You should provide a valid date.'
@@ -106,7 +110,7 @@ window.Parsley
     .addValidator('dateFormat', {
         requirementType: 'string',
         validateString: function (value, parameter) {
-            return moment(value, formatDatePhpToJs.convert(parameter)).isValid();
+            return moment(value, formatDatePhpToJs.convert(parameter), true).isValid();
         },
         messages: {
             en: 'The date you entered is not in the right format (%s).'
@@ -118,10 +122,16 @@ window.Parsley
 window.Parsley
     .addValidator('before', {
         requirementType: 'string',
-        validateString: function (value, parameter) {
-            var beforeDate = moment(parameter);
+        validateString: function (value, parameter, parsleyInstance) {
+            var dateFormats = getDateFormatsOption(parsleyInstance);
 
-            return moment(value) < beforeDate;
+            var beforeDate = moment(parameter, dateFormats, true);
+
+            // If it's not a valid date, error
+            if (beforeDate === false)
+                return false;
+
+            return moment(value, dateFormats) < beforeDate;
         },
         messages: {
             en: 'The date you entered should be before %s.'
@@ -130,13 +140,39 @@ window.Parsley
 
 // Check if the value is a date before the specified date (from another input)
 window.Parsley
-    .addValidator('before-input', {
+    .addValidator('beforeInput', {
         requirementType: 'string',
-        validateString: function (value, parameter) {
-            var beforeVal = jQuery(parameter).val();
-            var beforeDate = moment(beforeVal);
+        validateString: function (value, parameter, parsleyInstance) {
+            var dateFormats = getDateFormatsOption(parsleyInstance);
+            var beforeInput = jQuery(parameter);
 
-            return moment(value) < beforeDate;
+            // If we can't find the input, return true
+            if (beforeInput.length == 0)
+                return true;
+
+            var beforeVal = beforeInput.val();
+
+            // If the val is empty, return true
+            if (beforeVal == '')
+                return true;
+
+            var beforeDate = moment(beforeVal, dateFormats, true);
+
+            // If the before date isn't valid, error out
+            if (beforeDate.isValid() === false) {
+                console.warn(parameter + ' input does not contain a valid date');
+                return false;
+            }
+
+            var thisDate = moment(value, dateFormats, true);
+
+            // If the value's date isn't valid, error out
+            if (thisDate.isValid() === false) {
+                console.warn('the input being checked does not contain a valid date');
+                return false;
+            }
+
+            return thisDate < beforeDate;
         },
         messages: {
             en: 'The date you entered should be before %s.'
@@ -148,10 +184,15 @@ window.Parsley
 window.Parsley
     .addValidator('after', {
         requirementType: 'string',
-        validateString: function (value, parameter) {
-            var afterDate = moment(parameter);
+        validateString: function (value, parameter, parsleyInstance) {
+            var dateFormats = getDateFormatsOption(parsleyInstance);
+            var afterDate = moment(parameter, dateFormats, true);
 
-            return moment(value) > afterDate;
+            // If it's not a valid date, error
+            if (afterDate === false)
+                return false;
+
+            return moment(value, dateFormats) > afterDate;
         },
         messages: {
             en: 'The date you entered should be after %s.'
@@ -160,13 +201,41 @@ window.Parsley
 
 // Check if the value is a date before the specified date (from another input)
 window.Parsley
-    .addValidator('after-input', {
+    .addValidator('afterInput', {
         requirementType: 'string',
-        validateString: function (value, parameter) {
-            var afterVal = jQuery(parameter).val();
-            var afterDate = moment(afterVal);
+        validateString: function (value, parameter, parsleyInstance) {
+            var dateFormats = getDateFormatsOption(parsleyInstance);
+            var afterInput = jQuery(parameter);
 
-            return moment(value) > afterDate;
+            console.log(this, dateFormats);
+
+            // If we can't find the input, return true
+            if (afterInput.length == 0)
+                return true;
+
+            var afterVal = afterInput.val();
+
+            // If the val is empty, return true
+            if (afterVal == '')
+                return true;
+
+            var afterDate = moment(afterVal, dateFormats, true);
+
+            // If the after date isn't valid, error out
+            if (afterDate.isValid() === false) {
+                console.warn(parameter + ' input does not contain a valid date');
+                return false;
+            }
+
+            var thisDate = moment(value, dateFormats, true);
+
+            // If the value's date isn't valid, error out
+            if (thisDate.isValid() === false) {
+                console.warn('the input being checked does not contain a valid date');
+                return false;
+            }
+
+            return thisDate > afterDate;
         },
         messages: {
             en: 'The date you entered should be after %s.'
@@ -358,18 +427,38 @@ window.Parsley
 window.Parsley
     .addValidator('inArray', {
         requirementType: 'string',
-        validateString: function (value, otherFieldName) {
+        validateString: function (value, otherFieldName, parsleyInstance) {
+            var thisElement = jQuery(parsleyInstance.$element.get(0));
+
             var values = [];
 
             // Check if we're dealing with a text field
-            if(otherFieldName.substring(0,1) == '#')
-            {
+            if (otherFieldName.substring(0, 1) == '#') {
+                // Bind a change event
+                jQuery(otherFieldName).on('change', function () {
+                    if (thisElement.val() != '') {
+                        // Let's trigger validation
+                        parsleyInstance.validate();
+                    }
+                });
+
                 // If it's a text field we're assuming that it's a list of comma separated values
                 return jQuery(otherFieldName).val().split(',').indexOf(value) > -1;
             }
-            
+
+            // Bind a change handler to the checkboxes
+            jQuery('input:checkbox[name="' + otherFieldName + '"]').each(function () {
+                jQuery(this).on('change', function () {
+
+                    if (thisElement.val() != '') {
+                        // Let's trigger validation
+                        parsleyInstance.validate();
+                    }
+                });
+            });
+
             // Get the selected values of a checkbox by it's name
-            jQuery('input:checkbox[name="'+otherFieldName+'"]:checked').each(function(){
+            jQuery('input:checkbox[name="' + otherFieldName + '"]:checked').each(function () {
                 values.push(jQuery(this).val());
             });
 
@@ -391,11 +480,11 @@ var formatDatePhpToJs = {
         l: 'dddd',
         N: 'E',
         S: function () {
-            return '[' + this.format('Do').replace(/\d*/g, '') + ']';
+            return '[' + this.format('Do', true).replace(/\d*/g, '') + ']';
         },
         w: 'd',
         z: function () {
-            return this.format('DDD') - 1;
+            return this.format('DDD', true) - 1;
         },
         W: 'W',
         F: 'MMMM',
@@ -434,7 +523,7 @@ var formatDatePhpToJs = {
         P: 'Z',
         T: '[T]', // deprecated in moment
         Z: function () {
-            return parseInt(this.format('ZZ'), 10) * 36;
+            return parseInt(this.format('ZZ', true), 10) * 36;
         },
         c: 'YYYY-MM-DD[T]HH:mm:ssZ',
         r: 'ddd, DD MMM YYYY HH:mm:ss ZZ',
@@ -443,7 +532,16 @@ var formatDatePhpToJs = {
     formatEx: /[dDjlNSwzWFmMntLoYyaABgGhHisueIOPTZcrU]/g,
     convert: function (PHPDateFormat) {
         return PHPDateFormat.replace(this.formatEx, function (phpStr) {
-            return typeof this.mapChars[phpStr] === 'function' ? this.mapChars[phpStr].call(moment()) : this.mapChars[phpStr];
+            console.log(formatDatePhpToJs.mapChars[phpStr]);
+            return typeof formatDatePhpToJs.mapChars[phpStr] === 'function' ? formatDatePhpToJs.mapChars[phpStr].call(moment()) : formatDatePhpToJs.mapChars[phpStr];
         })
     }
+}
+
+function getDateFormatsOption(parsleyInstance) {
+    if (typeof parsleyInstance.options.dateFormats == 'undefined') {
+        return getDateFormatsOption(parsleyInstance.parent);
+    }
+
+    return parsleyInstance.options.dateFormats;
 }
