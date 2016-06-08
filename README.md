@@ -3,8 +3,6 @@ These are extra parsley validation rules that translate well to laravel's own va
 
 Be sure to take a look at the examples included in the repo.
 
-**Note: At the moment the required rules are untested and without examples, they'll follow shortly.**
-
 ## Install
 
 Just include laravel-parsley.js right after where you've included parsley.js.
