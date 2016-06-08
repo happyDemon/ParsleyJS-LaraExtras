@@ -21,11 +21,6 @@ window.Parsley
 
             return possibles.indexOf(value) == -1;
         },
-        validateNumber: function (value, parameter) {
-            var possibles = parameter.split(',');
-
-            return possibles.indexOf(value.toString()) == -1;
-        },
         messages: {
             en: 'The value should not be one of the following: "%s".'
         }
@@ -39,12 +34,7 @@ window.Parsley
             if (jQuery(parameter).length == 0)
                 return true;
 
-            jQuery(parameter).on('change', function(){
-                if(jQuery(fieldInstance.$element.get(0)).val() != '')
-                {
-                    fieldInstance.validate();
-                }
-            });
+            larapars.bindChangeToOtherElement('different', parameter, fieldInstance, true);
 
             return jQuery(parameter).val() != value;
         },
@@ -97,7 +87,7 @@ window.Parsley
     .addValidator('date', {
         requirementType: 'boolean',
         validateString: function (value, state, parsleyInstance) {
-            return moment(value, getDateFormatsOption(parsleyInstance), true).isValid();
+            return moment(value, larapars.getDateFormatsOption(parsleyInstance), true).isValid();
         },
         messages: {
             en: 'You should provide a valid date.'
@@ -123,7 +113,7 @@ window.Parsley
     .addValidator('before', {
         requirementType: 'string',
         validateString: function (value, parameter, parsleyInstance) {
-            var dateFormats = getDateFormatsOption(parsleyInstance);
+            var dateFormats = larapars.getDateFormatsOption(parsleyInstance);
 
             var beforeDate = moment(parameter, dateFormats, true);
 
@@ -143,7 +133,7 @@ window.Parsley
     .addValidator('beforeInput', {
         requirementType: 'string',
         validateString: function (value, parameter, parsleyInstance) {
-            var dateFormats = getDateFormatsOption(parsleyInstance);
+            var dateFormats = larapars.getDateFormatsOption(parsleyInstance);
             var beforeInput = jQuery(parameter);
 
             // If we can't find the input, return true
@@ -185,7 +175,7 @@ window.Parsley
     .addValidator('after', {
         requirementType: 'string',
         validateString: function (value, parameter, parsleyInstance) {
-            var dateFormats = getDateFormatsOption(parsleyInstance);
+            var dateFormats = larapars.getDateFormatsOption(parsleyInstance);
             var afterDate = moment(parameter, dateFormats, true);
 
             // If it's not a valid date, error
@@ -204,7 +194,7 @@ window.Parsley
     .addValidator('afterInput', {
         requirementType: 'string',
         validateString: function (value, parameter, parsleyInstance) {
-            var dateFormats = getDateFormatsOption(parsleyInstance);
+            var dateFormats = larapars.getDateFormatsOption(parsleyInstance);
             var afterInput = jQuery(parameter);
 
             console.log(this, dateFormats);
@@ -271,14 +261,25 @@ window.Parsley
 // the parameter should be formatted as data-parsley-required-if="["#elementValueToCheck", "value1,value2,.."]"
 window.Parsley
     .addValidator('requiredIf', {
-        requirementType: ['string', 'string'],
-        validateString: function (value, field, values) {
+        requirementType: 'string',
+        validateString: function (value, parameters, fieldInstance) {
+            // Normalise the parameters
+            var values = larapars.parseArrayStringParameter(parameters);
+
+            // Get the other input's selector
+            var field = values[0];
+
+            // Get the values it should contain to mark this one as required
+            parameters = values.slice(1);
+
+            // make sure that the other element get's a change event
+            larapars.bindChangeToOtherElement('requiredIf', field, fieldInstance);
+
             // Only required to check if the value is empty
             if (value.length == 0) {
-                var fieldValue = jQuery(field);
-                var valuesToCheck = values.split(',');
+                var fieldValue = jQuery(field).val();
 
-                return valuesToCheck.indexOf(fieldValue) == -1;
+                return parameters.indexOf(fieldValue) == -1;
             }
 
             return true;
@@ -293,14 +294,27 @@ window.Parsley
 // the parameter should be formatted as data-parsley-required-unless="["#elementValueToCheck", "value1,value2,.."]"
 window.Parsley
     .addValidator('requiredUnless', {
-        requirementType: ['string', 'string'],
-        validateString: function (value, field, values) {
-            // Only validate if the char count is 0
-            if (value.length == 0) {
-                var fieldValue = jQuery(field);
-                var valuesToCheck = values.split(',');
+        requirementType: 'string',
+        validateString: function (value, parameters, fieldInstance) {
+            // Normalise the parameters
+            var values = larapars.parseArrayStringParameter(parameters);
 
-                return valuesToCheck.indexOf(fieldValue) > -1;
+            // Get the other input's selector
+            var field = values[0];
+
+            // Get the values it should contain to mark this one as required
+            parameters = values.slice(1);
+
+            // make sure that the other element get's a change event
+            larapars.bindChangeToOtherElement('requiredUnless', field, fieldInstance);
+
+            // Only required to check if the value is empty
+            if (value.length == 0) {
+
+                var fieldValue = jQuery(field).val();
+
+                // It's not required if the input has one of the values
+                return parameters.indexOf(fieldValue) > -1;
             }
 
             return true;
@@ -311,19 +325,27 @@ window.Parsley
     });
 
 
-// The value is required if all any of the inputs are present in the dom
+// The value is required if  any of the inputs are present in the dom
 // the parameter should be formatted as data-parsley-required-with="#elementValueToCheck,#elementValueToCheck,.."
 window.Parsley
     .addValidator('requiredWith', {
         requirementType: 'string',
-        validateString: function (value, fields) {
+        validateString: function (value, parameters, fieldInstance) {
+            // Normalise the parameters
+            var allElements = larapars.parseArrayStringParameter(parameters);
+
             // Only validate if the char count is 0
             if (value.length == 0) {
-                var allFields = fields.split(',');
                 var AnyPresent = false;
 
-                allFields.forEach(function (id) {
-                    if (jQuery(id).length) {
+                allElements.forEach(function (id) {
+                    var $elem = jQuery(id);
+
+                    // Check for changes on this other input
+                    larapars.bindChangeToOtherElement('requiredWith', id, fieldInstance);
+
+                    // If the element is in the dom and has a value
+                    if ($elem.length > 0 && $elem.val() != '') {
                         AnyPresent = true;
                     }
                 });
@@ -344,14 +366,22 @@ window.Parsley
 window.Parsley
     .addValidator('requiredWithAll', {
         requirementType: 'string',
-        validateString: function (value, fields) {
+        validateString: function (value, parameters, fieldInstance) {
+            // Normalise the parameters
+            var allElements = larapars.parseArrayStringParameter(parameters);
+
             // Only validate if the char count is 0
             if (value.length == 0) {
-                var allFields = fields.split(',');
                 var AllPresent = true;
 
-                allFields.forEach(function (id) {
-                    if (jQuery(id).length == 0) {
+                allElements.forEach(function (id) {
+                    var $elem = jQuery(id);
+
+                    // Check for changes on this other input
+                    larapars.bindChangeToOtherElement('requiredWithAll', id, fieldInstance);
+
+                    // If the value isn't in the dom or is empty
+                    if ($elem.length == 0 || $elem.val() == '') {
                         AllPresent = false;
                     }
                 });
@@ -372,19 +402,26 @@ window.Parsley
 window.Parsley
     .addValidator('requiredWithout', {
         requirementType: 'string',
-        validateString: function (value, fields) {
+        validateString: function (value, parameters, fieldInstance) {
+            // Normalise the parameters
+            var allElements = larapars.parseArrayStringParameter(parameters);
+
             // Only validate if the char count is 0
             if (value.length == 0) {
-                var allFields = fields.split(',');
                 var AnyPresent = false;
 
-                allFields.forEach(function (id) {
-                    if (jQuery(id).length == 0) {
+                allElements.forEach(function (id) {
+                    var $elem = jQuery(id);
+
+                    // Check for changes on this other input
+                    larapars.bindChangeToOtherElement('requiredWithAll', id, fieldInstance);
+
+                    if ($elem.length == 0 || $elem.val() == '') {
                         AnyPresent = true;
                     }
                 });
 
-                return !AnyPresent;
+                return AnyPresent;
             }
 
             return true;
@@ -400,19 +437,26 @@ window.Parsley
 window.Parsley
     .addValidator('requiredWithoutAll', {
         requirementType: 'string',
-        validateString: function (value, fields) {
+        validateString: function (value, parameters, fieldInstance) {
+            // Normalise the parameters
+            var allElements = larapars.parseArrayStringParameter(parameters);
+
             // Only validate if the char count is 0
             if (value.length == 0) {
-                var allFields = fields.split(',');
-                var AllPresent = true;
+                var AllEmpty = true;
 
-                allFields.forEach(function (id) {
-                    if (jQuery(id).length == 1) {
-                        AllPresent = false;
+                allElements.forEach(function (id) {
+                    var $elem = jQuery(id);
+
+                    // Check for changes on this other input
+                    larapars.bindChangeToOtherElement('requiredWithAll', id, fieldInstance);
+
+                    if ($elem.length == 1  && $elem.val() != '') {
+                        AllEmpty = false;
                     }
                 });
 
-                return !AllPresent;
+                return AllEmpty;
             }
 
             return true;
@@ -435,12 +479,7 @@ window.Parsley
             // Check if we're dealing with a text field
             if (otherFieldName.substring(0, 1) == '#') {
                 // Bind a change event
-                jQuery(otherFieldName).on('change', function () {
-                    if (thisElement.val() != '') {
-                        // Let's trigger validation
-                        parsleyInstance.validate();
-                    }
-                });
+                larapars.bindChangeToOtherElement('inArray', otherFieldName, parsleyInstance, true);
 
                 // If it's a text field we're assuming that it's a list of comma separated values
                 return jQuery(otherFieldName).val().split(',').indexOf(value) > -1;
@@ -448,13 +487,7 @@ window.Parsley
 
             // Bind a change handler to the checkboxes
             jQuery('input:checkbox[name="' + otherFieldName + '"]').each(function () {
-                jQuery(this).on('change', function () {
-
-                    if (thisElement.val() != '') {
-                        // Let's trigger validation
-                        parsleyInstance.validate();
-                    }
-                });
+                larapars.bindChangeToOtherElement('inArray', this, parsleyInstance, true);
             });
 
             // Get the selected values of a checkbox by it's name
@@ -470,6 +503,109 @@ window.Parsley
         }
     });
 
+/**
+ * Helper functions.
+ *
+ * @type {{parseArrayStringParameter: larapars.parseArrayStringParameter, bindChangeToOtherElement: larapars.bindChangeToOtherElement, getDateFormatsOption: larapars.getDateFormatsOption}}
+ */
+var larapars = {
+    parseArrayStringParameter: function (parameter) {
+        var m = parameter.match(/^\s*\[(.*)\]\s*$/);
+
+        if (!m)
+            throw 'Requirement is not an array: "' + parameter + '"';
+
+        return m[1].replace(/\'+/g, '').split(',');
+    },
+    /**
+     * This is used by various validation rules that rely on another input for validation.
+     *
+     * This function adds a 'change' event listener which forces the original to be validated again.
+     *
+     * @param rule              Name of the rule this change handler is for
+     * @param element           Which element to bind this to
+     * @param fieldInstance     The ParsleyFieldInstance we can call validate() on
+     * @param originalNotEmpty  Should the original element not be empty? (optional, default false)
+     */
+    bindChangeToOtherElement: function (rule, element, fieldInstance, originalNotEmpty) {
+        var $elem = jQuery(element);
+        var elData = $elem.data('larapars-rules');
+
+        // None were added yet, initialise
+        if (elData === undefined) {
+            elData = [rule];
+            $elem.data('larapars-rules', elData);
+        }
+        // Initialised, but not present
+        else if (elData.indexOf(rule) == -1) {
+            elData.push(rule);
+            $elem.data('larapars-rules', elData);
+        }
+        // Already bound
+        else {
+            return;
+        }
+
+        // If not yet bound
+        $elem.on('change', function () {
+            if (originalNotEmpty === true && jQuery(fieldInstance.$element.get(0)).val() != '') {
+                fieldInstance.validate();
+            }
+            else if (originalNotEmpty !== true) {
+                fieldInstance.validate();
+            }
+        });
+    },
+    getDateFormatsOption: function (parsleyInstance) {
+        if (typeof parsleyInstance.options.dateFormats == 'undefined') {
+            return this.getDateFormatsOption(parsleyInstance.parent);
+        }
+
+        return parsleyInstance.options.dateFormats;
+    }
+};
+
+
+/**
+ * Overwrite core Parsley methods.
+ *
+ * @type {{_isRequired: Window.ParsleyExtend._isRequired}}
+ */
+window.ParsleyExtend = {
+    // Normally this was intended Internal only.
+    // Field is required if have required constraint without `false` value
+    _isRequired: function () {
+
+        var requiredRules = [
+            // This one comes out of the box with parsley
+            'required',
+
+            // These ones were added with this library
+            'requiredIf', 'requiredUnless', 'requiredWith', 'requiredWithAll', 'requiredWithout', 'requiredWithoutAll'
+        ];
+
+        var requiredRulesFound = [];
+
+        // Loop over the list to check if they're defined on the field.
+        requiredRules.forEach(function (rule) {
+            if ('undefined' !== typeof this.constraintsByName[rule]) {
+                requiredRulesFound.push(rule);
+            }
+        }, this);
+
+        // If there's not one required rule, return false
+        if (requiredRulesFound.length == 0)
+            return false;
+
+        // If parsley's on required rule was found
+        if (requiredRulesFound.indexOf('required') >= 0) {
+            // Check if the flag is set to true
+            return false !== this.constraintsByName.required.requirements;
+        }
+
+        return true;
+    }
+};
 
 // convert PHP date format to moment JS date format
 var formatDatePhpToJs = {
@@ -536,12 +672,4 @@ var formatDatePhpToJs = {
             return typeof formatDatePhpToJs.mapChars[phpStr] === 'function' ? formatDatePhpToJs.mapChars[phpStr].call(moment()) : formatDatePhpToJs.mapChars[phpStr];
         })
     }
-}
-
-function getDateFormatsOption(parsleyInstance) {
-    if (typeof parsleyInstance.options.dateFormats == 'undefined') {
-        return getDateFormatsOption(parsleyInstance.parent);
-    }
-
-    return parsleyInstance.options.dateFormats;
 }
