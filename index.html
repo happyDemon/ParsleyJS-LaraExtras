@@ -41,8 +41,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://github.com/happyDemon/ParsleyJS-LaraExtras">Repo</a></li>
-                <li><a href="https://github.com/happyDemon">Author</a></li>
+                <li><a href="https://github.com/happyDemon">happyDemon</a></li>
+                <li><a class="link-repo" href="https://github.com/happyDemon/ParsleyJS-LaraExtras"><i class="fa fa-github fa-2x"></i></a></li>
             </ul>
         </div>
     </div>
@@ -58,7 +58,7 @@
                 class="fa fa-github fa-2x"></i></a></p>
     </div>
 </div>
-<div class="container" style="padding-bottom: 200px;">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
             <h1 id="rules_in">In rules</h1>
@@ -456,8 +456,261 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="rules_required">Required rules</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputRequiredIf" class="control-label">data-parsley-required-if</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-required-if">required_if</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-required-if="['#inputRequiredIfOther','cheese,apple,cake,fries']" type="text" class="form-control input-sm" id="inputRequiredIf" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>This value is only required if the right input contains any of these values: <span class="text-primary">cheese,apple,cake,fries</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-9">
+                                <input
+                                        type="text" class="form-control input-sm" id="inputRequiredIfOther"
+                                        placeholder="Value">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputRequiredUnless" class="control-label">data-parsley-required-unless</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-required-unless">required_unless</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-required-unless="['#inputRequiredUnlessOther','cheese,apple,cake,fries']" type="text" class="form-control input-sm" id="inputRequiredUnless" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>This value is required unless the right input contains any of these values: <span class="text-primary">cheese,apple,cake,fries</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-9">
+                                <input
+                                        type="text" class="form-control input-sm" id="inputRequiredUnlessOther"
+                                        placeholder="Value">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputRequiredWith" class="control-label">data-parsley-required-with</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-required-with">required_with</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-required-with="['#inputRequiredWithOther1','#inputRequiredWithOther2','#inputRequiredWithOther3']" type="text" class="form-control input-sm" id="inputRequiredWith" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>This value is required if any of the inputs on the right have a value.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithOther1"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithOther2"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithOther3"
+                                       placeholder="Value">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputRequiredWithAll" class="control-label">data-parsley-required-with-all</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-required-with-all">required_with_all</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-required-with-all="['#inputRequiredWithAllOther1','#inputRequiredWithAllOther2','#inputRequiredWithAllOther3']" type="text" class="form-control input-sm" id="inputRequiredWithAll" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>This value is required if all of the inputs on the right have a value.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithAllOther1"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithAllOther2"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithAllOther3"
+                                       placeholder="Value">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputRequiredWithout" class="control-label">data-parsley-required-without</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-required-without">required_without</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-required-without="['#inputRequiredWithoutOther1','#inputRequiredWithoutOther2','#inputRequiredWithoutOther3']" type="text" class="form-control input-sm" id="inputRequiredWithout" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>This value is required if any of the inputs on the right don't have a value.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithoutOther1"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithoutOther2"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithoutOther3"
+                                       placeholder="Value">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputRequiredWithoutAll" class="control-label">data-parsley-required-without-all</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-required-without-all">required_without_all</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-required-without-all="['#inputRequiredWithoutAllOther1','#inputRequiredWithoutAllOther2','#inputRequiredWithoutAllOther3']" type="text" class="form-control input-sm" id="inputRequiredWithoutAll" placeholder="Value">
+                                <div class="help-block text-info">
+                                    <small>This value is required if all of the inputs on the right don't have a value.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithoutAllOther1"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithoutAllOther2"
+                                       placeholder="Value">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control input-sm" id="inputRequiredWithoutAllOther3"
+                                       placeholder="Value">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
+<div class="footer">
+    <div class="container">
+        <div class="col-md-2">
+            <h4>Tested with</h4>
+            <ul class="list-unstyled">
+                <li><span class="col-md-8">jQuery</span> <small class="col-md-4 text-primary">2.2.4</small></li>
+                <li><span class="col-md-8">ParsleyJS</span> <small class="col-md-4 text-primary">2.3.13</small></li>
+                <li><span class="col-md-8">MomentJS</span> <small class="col-md-4 text-primary">2.13.0</small></li>
+            </ul>
+        </div>
+        <div class="col-md-2 col-md-offset-1">
+            <h4>Tested in</h4>
+            <ul class="list-unstyled">
+                <li><span class="col-md-8">Chrome</span></li>
+            </ul>
+        </div>
+        <div class="col-md-6 col-md-offset-1">
+
+        </div>
+    </div>
+</div>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

@@ -45,3 +45,16 @@ body{
     left: 0;
     z-index: 1030
 }
+.footer {
+    background: #FAFAFA;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-top: 30px;
+}
+.form-group {
+    margin-top: 10px;
+}
+
+.link-repo {
+    padding-bottom: 6px !important;
+}
