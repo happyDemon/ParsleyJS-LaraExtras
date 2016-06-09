@@ -1,0 +1,96 @@
+{
+  "name": "parsley-laravel-extras",
+  "version": "0.3.0",
+  "description": "Provides extra validation rules for ParsleyJS that translate well to rules that laravel has out-of-the-box",
+  "main": "dist/laravel-parsley.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "gulp",
+    "test-browser": "gulp test-browser",
+    "build": "gulp build",
+    "coverage": "gulp coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/happyDemon/ParsleyJS-LaraExtras.git"
+  },
+  "keywords": [
+    "laravel",
+    "parsley",
+    "parsleyjs",
+    "extra",
+    "validation",
+    "rules"
+  ],
+  "author": "Maxim Kerstens <maxim.kerstens@gmail.com> (https://github.com/happyDemon)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/happyDemon/ParsleyJS-LaraExtras/issues"
+  },
+  "homepage": "https://github.com/happyDemon/ParsleyJS-LaraExtras#readme",
+  "dependencies": {
+    "jquery": "^2.2.4",
+    "moment": "^2.13.0",
+    "parsleyjs": "^2.3.13"
+  },
+  "devDependencies": {
+    "babel-core": "^5.2.17",
+    "babel-eslint": "^4.0.5",
+    "babelify": "^6.0.0",
+    "browserify": "^11.0.1",
+    "expect.js": "*",
+    "del": "^1.1.1",
+    "esperanto": "^0.7.4",
+    "glob": "^5.0.14",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.0.0",
+    "docco": "~0.6.3",
+    "gulp-eslint": "^1.0.0",
+    "gulp-file": "^0.2.0",
+    "gulp-filter": "^3.0.0",
+    "gulp-header": "*",
+    "gulp-istanbul": "^0.10.0",
+    "gulp-jscs": "^2.0.0",
+    "gulp-livereload": "^3.4.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-notify": "^2.1.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-replace": "*",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp-git": "^1.7.0",
+    "inputevent": "*",
+    "isparta": "~3.0.3",
+    "mocha": "^2.1.0",
+    "moment": "*",
+    "run-sequence": "^1.0.2",
+    "jsdom": "^8.4.1",
+    "sinon": "^1.12.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^3.3.1"
+  },
+  "babelBoilerplateOptions": {
+    "entryFileName": "main",
+    "mainVarName": "laraParsley",
+    "mochaGlobals": [
+      "$",
+      "stub",
+      "spy",
+      "expect",
+      "expectWarning"
+    ]
+  },
+  "spm": {
+    "main": "dist/laravel-parsley.js",
+    "ignore": [
+      "doc",
+      "test",
+      "src"
+    ]
+  }
+}
