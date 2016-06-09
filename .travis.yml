@@ -2,18 +2,25 @@ sudo: false
 language: node_js
 cache:
   directories:
-    - node_modules
+  - node_modules
 notifications:
   email: false
 node_js:
-  - '4'
+- '4'
 before_install:
-  - npm i -g npm@^2.0.0
+- npm i -g npm@^2.0.0
 before_script:
-  - npm prune
-  - gulp build
+- npm prune
+- gulp build
 after_success:
-  - npm run semantic-release
+- npm run semantic-release
 branches:
   except:
-    - /^v\d+\.\d+\.\d+$/
+  - /^v\d+\.\d+\.\d+$/
+deploy: 
+api_key: 
+email: maxim.kerstens@gmail.com.com
+provider: npm
+env:
+  global:
+  - secure: eX/hU9kiLRsKTKN8IVR1Qmd0HHJY+2K/x8Bi3C25uGUNVjP+Nt7luwzNvWcp7nEvNK3k5rX+BxXx4kKG9n57pP31F8Fi6GPuNdnbqzI7x3DTQF4Dg3MUBr0K2fjZK5faeJjHVWmuRJlLHBKRkoscOvCG6ZPIaZNkdxOc/+INrxo+S5vUP6jqcKuyfKM091QJxNqNrpyKctAEjFzMBKiq4YQIcrr1TtqG/0+eM9ry3YIvcQB6hqKT+Xw6JaBy5EFOiveV6qDtPpjjEw+XSN//oGWodVtrTHbHVl8sVGwNEvBX7CEr/Rsu0/M5uxEH+YD1x+OwrrptdKjLFXVCo+PuLl8Rpb8Z9KMyijo7YaNmwQeBS+aro7HH5A/jSAECX1HkUN2CTrvkYv53cvqCLac0zKhSIbKPHFFFyyIrGZFd/2rmpdTsu0duXUUOirDJNBnxsPc1kra9ZU+fmOWDYoEznCCvnp3WADDI7OD9tBqDy+anTgaF711svqUGx4qtUi83+ey12bAzdhesZBxwWMWE138A9PhWBTYuZih16GmzBixdnB5xIAdcWq+anEa62GR4K0GELJOep8swEUONC/3SsH4NlDeCNqpBNwFCbRBsEPZABXHSpvk/uZlj/N9IvAvuVtCu/Pswf7w2daKNO9AjF/JYI7FJZwHONqBiskMQcl4=
