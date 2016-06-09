@@ -5,11 +5,21 @@ Be sure to take a look at the examples included in the repo.
 
 ## Install
 
-Just include laravel-parsley.js right after where you've included parsley.js.
+### NPM
 
-Don't forget to include moment.js if you're using date validation.
+`npm install parsley-laravel-extras`
 
-If you'd like support for < IE9, include polyfill.js.
+Next you can import or require it in your js:
+
+`require('parsley-laravel-extras')`
+
+`import 'parsley-laravel-extras'`
+
+Or just include dist/laravel-parsley.js right after where you've included parsley.js.
+
+**Note** Don't forget to include moment.js if you're using date validation.
+
+**Note** If you'd like support for < IE9, include [es5-shim](https://github.com/es-shims/es5-shim).
 
 #### Dates
 
