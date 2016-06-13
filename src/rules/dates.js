@@ -155,7 +155,7 @@ window.Parsley
     });
 
 // convert PHP date format to moment JS date format
-var formatDatePhpToJs = {
+var formatDatePhpToJs = window.formatDatePhpToJs = {
     mapChars: {
         d: 'DD',
         D: 'ddd',

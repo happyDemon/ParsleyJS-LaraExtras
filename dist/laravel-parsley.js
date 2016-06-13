@@ -1,6 +1,6 @@
 /*!
  * ParsleyJS-LaraExtras.js
- * Version  - built Thu, Jun 9th 2016, 9:43 pm
+ * Version 0.3.1 - built Mon, Jun 13th 2016, 11:04 pm
  * hhttps://github.com/happyDemon/ParsleyJS-LaraExtras
  * Maxim Kerstens - <maxim.kerstens@gmail.com>
  * MIT Licensed
@@ -179,7 +179,7 @@
     });
 
     // convert PHP date format to moment JS date format
-    var formatDatePhpToJs = {
+    var formatDatePhpToJs = window.formatDatePhpToJs = {
         mapChars: {
             d: 'DD',
             D: 'ddd',
