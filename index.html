@@ -687,6 +687,120 @@
                 </form>
             </div>
         </div>
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="rules_files">Files rules</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputInArray" class="control-label">data-parsley-file-size-max</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-max">max</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-file-size-max="[200, kb]" type="file"
+                                       class="form-control input-sm" id="inputFileSizeMax" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>The maximum file size is 200Kb</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputInArray" class="control-label">data-parsley-file-size-min</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-min">min</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-file-size-min="[200, kb]" type="file"
+                                       class="form-control input-sm" id="inputFileSizeMin" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>The minimum file size is 200Kb</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputInArray" class="control-label">data-parsley-file-size-between</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-between">between</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-file-size-between="[5, 29, mb]" type="file"
+                                       class="form-control input-sm" id="inputFileSizeBetween" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>The file should be between 5 & 29 MB</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                <form class="form">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputInArray" class="control-label">data-parsley-image</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-image">image</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-image type="file"
+                                       class="form-control input-sm" id="inputFileImage" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>The file should be an image</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputInArray" class="control-label">data-parsley-file-mime-type</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-mimetypes">mimetypes</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-file-mimetype="[application/pdf]" type="file"
+                                       class="form-control input-sm" id="inputFileMimeTypes" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>The file should be a pdf</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label for="inputInArray" class="control-label">data-parsley-dimensions</label>
+                                <a class="text-warning clearfix" tabindex="-1"
+                                   href="https://laravel.com/docs/5.2/validation#rule-dimensions">dimensions</a>
+                            </div>
+                            <div class="col-md-9">
+                                <input data-parsley-trigger="blur" data-parsley-dimensions data-parsley-dimensions-options="{'max_width': 100}" type="file"
+                                       class="form-control input-sm" id="inputFileDimensionsMinWidth" placeholder="Value    ">
+                                <div class="help-block text-info">
+                                    <small>The image should have a mind width of 100px</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
