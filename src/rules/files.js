@@ -148,10 +148,6 @@ window.Parsley
     });
 
 // Make sure all images withing the input have specific dimensions
-
-//Parsley.addAsyncValidator();
-
-
 window.Parsley
     .addValidator('dimensions', {
         requirementType: {
@@ -164,109 +160,102 @@ window.Parsley
             height: 'number', // Specify the height the image should have
             ratio: 'string', // Specify the ratio the image should have
         },
-        validateString: function (value, param, options, parsleyFieldInstance) {
+        validateString: function (value, param, parsleyFieldInstance) {
             var files = parsleyFieldInstance.$element[0].files;
 
+            var options = parsleyFieldInstance.domOptions.dimensionsOptions;
 
             // If a file is present in the input
             if (files.length > 0) {
                 var defer = jQuery.Deferred();
+                var _URL = window.URL || window.webkitURL;
 
-                var file = new FileReader;
+                var image = new Image;
 
-                // Set up the image validation when the file is loaded
-                file.onload = function () {
-                    var image = new Image;
+                // Validate once t he image is loaded
+                image.onload = function () {
+                    var width = this.width;
+                    var height = this.height;
 
-                    // Validate once t he image is loaded
-                    image.onload = function () {
-                        var width = this.width;
-                        var height = this.height;
-
-                        // Check min width, if defined
-                        if (typeof options.min_width != 'undefined') {
-                            console.log(width, options.min_width);
-                            if (width < options.min_width) {
-                                defer.reject();
-                                return;
-                            }
+                    // Check min width, if defined
+                    if (typeof options.min_width != 'undefined') {
+                        if (width < options.min_width) {
+                            defer.reject(image);
+                            return true;
                         }
-
-                        // Check max width, if defined
-                        if (typeof options.max_width != 'undefined') {
-                            if (width > options.max_width) {
-                                defer.reject();
-                                return;
-                            }
-                        }
-
-                        // Check min height, if defined
-                        if (typeof options.min_height != 'undefined') {
-                            if (height < options.min_height) {
-                                defer.reject();
-                                return;
-                            }
-                        }
-
-                        // Check max height, if defined
-                        if (typeof options.max_height != 'undefined') {
-                            if (height > options.max_height) {
-                                defer.reject();
-                                return;
-                            }
-                        }
-
-                        // Check width, if defined
-                        if (typeof options.width != 'undefined') {
-                            if (width != options.width) {
-                                defer.reject();
-                                return;
-                            }
-                        }
-
-                        // Check height, if defined
-                        if (typeof options.height != 'undefined') {
-                            if (height != options.height) {
-                                defer.reject();
-                                return;
-                            }
-                        }
-
-                        // Check ratio, if defined
-                        if (typeof options.ratio != 'undefined') {
-                            var splitRatio = options.ratio.split(':');
-
-                            if (splitRatio[0] / splitRatio[1] != width / height) {
-                                defer.reject();
-                                return;
-                            }
-                        }
-
-                        defer.resolve();
-                    };
-
-                    // On error, reject the promise
-                    image.onerror = function() {
-                        console.log('image error');
-                        defer.reject();
                     }
 
-                    // Set the image
-                    console.log(file.result);
-                    image.src = file.result;
-                }
+                    // Check max width, if defined
+                    if (typeof options.max_width != 'undefined') {
+                        if (width > options.max_width) {
+                            defer.reject(image);
+                            return true;
+                        }
+                    }
+
+                    // Check min height, if defined
+                    if (typeof options.min_height != 'undefined') {
+                        if (height < options.min_height) {
+                            defer.reject(image);
+                            return true;
+                        }
+                    }
+
+                    // Check max height, if defined
+                    if (typeof options.max_height != 'undefined') {
+                        if (height > options.max_height) {
+                            defer.reject(image);
+                            return true;
+                        }
+                    }
+
+                    // Check width, if defined
+                    if (typeof options.width != 'undefined') {
+                        if (width != options.width) {
+                            defer.reject(image);
+                            return true;
+                        }
+                    }
+
+                    // Check height, if defined
+                    if (typeof options.height != 'undefined') {
+                        if (height != options.height) {
+                            defer.reject(image);
+                            return true;
+                        }
+                    }
+
+                    // Check ratio, if defined
+                    if (typeof options.ratio != 'undefined') {
+                        var splitRatio = options.ratio.split(':');
+                        if (splitRatio[0] / splitRatio[1] != width / height) {
+                            defer.reject(image);
+                            return true;
+                        }
+                    }
+
+                    defer.resolve(image);
+                };
 
                 // On error, reject the promise
-                file.onerror = function() {
-                    console.log('file error');
+                image.onerror = function () {
+                    console.warn('image load error');
                     defer.reject();
                 }
 
-                // Set the file
-                console.log(files[0]);
-                file.readAsDataURL(files[0])
+                image.src = _URL.createObjectURL(files[0]);
 
-                return defer.promise();
+                return defer.promise().then(function(image){
+                    // Clean up
+                    image = null;
+
+                    return true;
+                }, function(image){
+                    // Clean up
+                    image = null;
+
+                    return false;
+                });
             }
 
             return true;

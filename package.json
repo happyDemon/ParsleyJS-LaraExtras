@@ -1,6 +1,6 @@
 {
   "name": "parsley-laravel-extras",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Provides extra validation rules for ParsleyJS that translate well to rules that laravel has out-of-the-box",
   "main": "dist/laravel-parsley.js",
   "directories": {
