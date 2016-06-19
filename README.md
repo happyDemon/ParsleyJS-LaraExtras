@@ -1,7 +1,7 @@
 # ParsleyJS-LaraExtras
-[![npm](https://img.shields.io/npm/dt/parsley-laravel-extras.svg?maxAge=2592000)](https://www.npmjs.com/package/parsley-laravel-extras)
-[![npm](https://img.shields.io/npm/v/parsley-laravel-extras.svg?maxAge=2592000)](https://www.npmjs.com/package/parsley-laravel-extras)
-[![GitHub commits](https://img.shields.io/github/commits-since/happyDemon/ParsleyJS-LaraExtras/0.3.0.svg?maxAge=2592000)](https://github.com/happyDemon/ParsleyJS-LaraExtras)
+[![npm](https://img.shields.io/npm/dt/parsley-laravel-extras.svg?maxAge=3600)](https://www.npmjs.com/package/parsley-laravel-extras)
+[![npm](https://img.shields.io/npm/v/parsley-laravel-extras.svg?maxAge=3600)](https://www.npmjs.com/package/parsley-laravel-extras)
+[![GitHub commits](https://img.shields.io/github/commits-since/happyDemon/ParsleyJS-LaraExtras/0.4.2.svg?maxAge=3600)](https://github.com/happyDemon/ParsleyJS-LaraExtras)
 
 These are extra parsley validation rules that translate well to laravel's own validation rules.
 

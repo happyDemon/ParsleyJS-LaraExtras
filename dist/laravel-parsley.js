@@ -1,6 +1,6 @@
 /*!
  * ParsleyJS-LaraExtras.js
- * Version 0.4.1 - built Sun, Jun 19th 2016, 12:34 am
+ * Version 0.4.2 - built Sun, Jun 19th 2016, 3:00 pm
  * hhttps://github.com/happyDemon/ParsleyJS-LaraExtras
  * Maxim Kerstens - <maxim.kerstens@gmail.com>
  * MIT Licensed
@@ -722,7 +722,7 @@
         }
     });
 
-    // Make sure all files within the input are an image
+    // Make sure all files within the input have one of the defined mimetypes
     window.Parsley.addValidator('fileMimetype', {
         requirementType: 'string',
         validateString: function validateString(value, mimetypes, parsleyFieldInstance) {
@@ -747,7 +747,34 @@
         }
     });
 
-    // Make sure all images withing the input have specific dimensions
+    // Make sure all files within the input have one of the defined extensions
+    window.Parsley.addValidator('fileExt', {
+        requirementType: 'string',
+        validateString: function validateString(value, extensions, parsleyFieldInstance) {
+            var allExts = utils.parseArrayStringParameter(extensions);
+
+            var files = parsleyFieldInstance.$element[0].files;
+
+            // If a file is present in the input
+            if (files.length > 0) {
+                // Loop over the files
+                for (var i = 0; i < files.length; i++) {
+                    var explodeNames = files[i].name.split('.');
+
+                    if (allExts.indexOf(explodeNames[explodeNames.length - 1]) == -1) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        },
+        messages: {
+            en: 'This file does not have the correct extensions.'
+        }
+    });
+
+    // Make sure all images within the input have specific dimensions
     window.Parsley.addValidator('dimensions', {
         requirementType: {
             '': 'boolean',
@@ -866,7 +893,7 @@
      *
      * @type {{_isRequired: Window.ParsleyExtend._isRequired}}
      */
-    window.ParsleyExtend = {
+    window.ParsleyExtend = jQuery.extend({}, window.ParsleyExtend, {
         // Normally this was intended Internal only.
         // Field is required if have required constraint without `false` value
         _isRequired: function _isRequired() {
@@ -898,7 +925,7 @@
 
             return true;
         }
-    };
+    });
 
     var main = utils;
 
