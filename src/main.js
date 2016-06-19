@@ -11,7 +11,7 @@ import './utils.js';
  *
  * @type {{_isRequired: Window.ParsleyExtend._isRequired}}
  */
-window.ParsleyExtend = {
+window.ParsleyExtend = jQuery.extend({}, window.ParsleyExtend, {
     // Normally this was intended Internal only.
     // Field is required if have required constraint without `false` value
     _isRequired: function () {
@@ -45,6 +45,6 @@ window.ParsleyExtend = {
 
         return true;
     }
-};
+});
 
 export default utils;
