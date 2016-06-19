@@ -121,7 +121,7 @@ window.Parsley
     });
 
 
-// Make sure all files within the input are an image
+// Make sure all files within the input have one of the defined mimetypes
 window.Parsley
     .addValidator('fileMimetype', {
         requirementType: 'string',
@@ -147,7 +147,36 @@ window.Parsley
         }
     });
 
-// Make sure all images withing the input have specific dimensions
+
+// Make sure all files within the input have one of the defined extensions
+window.Parsley
+    .addValidator('fileExt', {
+        requirementType: 'string',
+        validateString: function (value, extensions, parsleyFieldInstance) {
+            var allExts = utils.parseArrayStringParameter(extensions);
+
+            var files = parsleyFieldInstance.$element[0].files;
+
+            // If a file is present in the input
+            if (files.length > 0) {
+                // Loop over the files
+                for (var i = 0; i < files.length; i++) {
+                    var explodeNames = files[i].name.split('.');
+
+                    if (allExts.indexOf(explodeNames[explodeNames.length - 1]) == -1) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        },
+        messages: {
+            en: 'This file does not have the correct extensions.'
+        }
+    });
+
+// Make sure all images within the input have specific dimensions
 window.Parsley
     .addValidator('dimensions', {
         requirementType: {
